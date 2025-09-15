@@ -1,0 +1,6 @@
+Dear Momo,
+
+Test for Open, Read, Write files
+Absolute and Relative Paths
+
+Sorin
