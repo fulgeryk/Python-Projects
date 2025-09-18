@@ -8,7 +8,6 @@ image = "blank_states_img.gif"
 screen.addshape(image)
 turtle_for_screen.shape(image)
 state_ghicitie = []
-lista_state_neghicite = []
 game_over = False
 
 while not game_over:
@@ -18,9 +17,7 @@ while not game_over:
         game_over = True
     if answer_state == "Exit":
         game_over = True
-        for state in states.get_all_states():
-            if state not in state_ghicitie:
-                lista_state_neghicite.append(state)
+        lista_state_neghicite = [state for state in states.get_all_states() if state not in state_ghicitie]
         states.remaining_states(lista_state_neghicite)
     if states.existing_state(answer_state):
         if answer_state not in state_ghicitie:
