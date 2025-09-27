@@ -15,7 +15,7 @@ for row in data_dict:
         with open(random_file) as file:
             content = file.readlines()
             new_content= "".join(content)
-            send_file=new_content.replace("[name]", row["name"])
+            send_file=new_content.replace("[NAME]", row["name"])
         with smtplib.SMTP("smtp.mail.yahoo.com", 587) as connection:
             connection.starttls()  # securizeaza conexiunea
             connection.login(user=my_email, password=password)
