@@ -1,0 +1,30 @@
+# 🐍 Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.db
+*.log
+
+# Environments
+.venv/
+env/
+venv/
+
+# 🔑 Environment variables
+.env
+
+# 📂 IDE / Editor
+.idea/
+.vscode/
+*.swp
+
+# 💻 OS files
+.DS_Store
+Thumbs.db
+
+# 🔧 Build / Packaging
+build/
+dist/
+*.egg-info/
