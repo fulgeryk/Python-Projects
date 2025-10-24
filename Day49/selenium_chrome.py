@@ -8,6 +8,7 @@ ACCOUNT_EMAIL = "fulger@test.com"
 ACCOUNT_PASSWORD = "Logitech123"
 GYM_URL = "https://appbrewery.github.io/gym/"
 
+
 class SeleniunConfigure:
     def __init__(self):
         self.chrome_options = webdriver.ChromeOptions()
@@ -16,6 +17,9 @@ class SeleniunConfigure:
         self.chrome_options.add_argument(f"--user-data-dir={self.user_data_dir}")
         self.driver = webdriver.Chrome(options=self.chrome_options)
         self.driver.get(GYM_URL)
+        self.CNT_BOOKED_JOINED = 0
+        self.CNT_WAITLISTS_JOINED = 0
+        self.CNT_ALREADY_BOOKED_OR_WAITLISTED = 0
 
     def login(self):
         wait = WebDriverWait(self.driver, timeout=5)
@@ -40,18 +44,26 @@ class SeleniunConfigure:
                     if "6:00 PM" in t.text:
                         click_button = card.find_element(By.CSS_SELECTOR, value = "button[id^='book-button-']")
                         if click_button.text == "Booked":
+                            self.CNT_ALREADY_BOOKED_OR_WAITLISTED += 1
                             print(f'✓ Already booked: {card.find_element(By.CSS_SELECTOR, value="h3[id^=class-name-]").text} on {day_title} at hout {t.text}')
                         elif click_button.text == "Waitlisted":
+                            self.CNT_ALREADY_BOOKED_OR_WAITLISTED += 1
                             print(f'✓ Already on Waitlist: {card.find_element(By.CSS_SELECTOR, value="h3[id^=class-name-]").text} on {day_title} at hout {t.text}')
                         elif click_button.text == "Join Waitlist":
+                            self.CNT_WAITLISTS_JOINED += 1
                             click_button.click()
                             print(f'✓ Joined Waitlist for: {card.find_element(By.CSS_SELECTOR, value="h3[id^=class-name-]").text} on {day_title} at hout {t.text}')
                         else:
+                            self.CNT_BOOKED_JOINED +=1
                             click_button.click()
                             print(f"✓ Booked for {card.find_element(By.CSS_SELECTOR, value="h3[id^=class-name-]").text} on {day_title} and at hour {t.text}")
-        #Just for debug
-        # see_booking = self.driver.find_element(By.ID, value="my-bookings-link")
-        # see_booking.click()
+
+    def booking_summary(self):
+        print("--- BOOKING SUMMARY ---")
+        print(f"Classes booked: {self.CNT_BOOKED_JOINED}")
+        print(f"Waitlists joined: {self.CNT_WAITLISTS_JOINED}")
+        print(f"Already Booked/waitlisted: {self.CNT_ALREADY_BOOKED_OR_WAITLISTED}")
+        print(f"Total classes processed: {self.CNT_BOOKED_JOINED + self.CNT_WAITLISTS_JOINED + self.CNT_ALREADY_BOOKED_OR_WAITLISTED}")
 
 
 
