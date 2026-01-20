@@ -1,5 +1,3 @@
-from itertools import groupby
-
 import pandas as pd
 import plotly.express as px
 df_apps = pd.read_csv("apps.csv")
